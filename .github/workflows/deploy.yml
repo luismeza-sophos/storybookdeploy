@@ -3,7 +3,13 @@ name: Build and Publish storybook to GitHub Pages
 on:
   push:
     branches:
-      - "main"
+      - "main" # change to the branch you wish to deploy from
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     environment:
@@ -12,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - id: build-publish
-      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.0
+      uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
       with:
-        path: dist/storybook
-        build_command: npm run build-storybook
+        path: storybook-static
+        install_command: yarn install
+        build_command: yarn run build-storybook
